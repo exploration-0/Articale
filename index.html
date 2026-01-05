@@ -1,0 +1,3068 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArticleHub - Modern Publishing Platform</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="A modern article publishing platform with advanced features and secure admin CMS">
+    <meta name="keywords" content="articles, blogging, publishing, content, CMS">
+    <meta name="author" content="ArticleHub">
+    <meta property="og:title" content="ArticleHub - Modern Publishing Platform">
+    <meta property="og:description" content="A modern article publishing platform">
+    <meta property="og:type" content="website">
+    
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "ArticleHub",
+        "description": "A modern article publishing platform",
+        "url": "https://articlehub.example.com"
+    }
+    </script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Rich Text Editor -->
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+    
+    <style>
+        /* CSS Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-bg: #0a0a0a;
+            --color-surface: #111111;
+            --color-surface-light: #1a1a1a;
+            --color-surface-lighter: #222222;
+            --color-text: #ffffff;
+            --color-text-secondary: #b0b0b0;
+            --color-text-muted: #888888;
+            --color-primary: #ffffff;
+            --color-primary-hover: #f0f0f0;
+            --color-accent: #3a86ff;
+            --color-accent-hover: #2a76ef;
+            --color-border: #333333;
+            --color-border-light: #444444;
+            --color-success: #4CAF50;
+            --color-warning: #FF9800;
+            --color-error: #F44336;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+            --radius: 8px;
+            --radius-lg: 12px;
+            --transition: all 0.3s ease;
+            --header-height: 70px;
+            --sidebar-width: 280px;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Source Serif Pro', serif;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 2.25rem;
+        }
+
+        h3 {
+            font-size: 1.75rem;
+        }
+
+        h4 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+        }
+
+        a {
+            color: var(--color-accent);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--color-accent-hover);
+        }
+
+        /* Utility Classes */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .visible {
+            display: block !important;
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .slide-up {
+            animation: slideUp 0.6s ease forwards;
+        }
+
+        .slide-down {
+            animation: slideDown 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--color-accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-accent-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background-color: var(--color-surface-light);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-surface-lighter);
+        }
+
+        .btn-danger {
+            background-color: var(--color-error);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background-color: var(--color-surface-light);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            color: var(--color-text);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 2rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            background-color: var(--color-surface-light);
+            border: 1px solid var(--color-border);
+            border-radius: 50px;
+            color: var(--color-text);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-text-muted);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: var(--header-height);
+            min-height: calc(100vh - var(--header-height));
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--color-bg) 0%, #151515 100%);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .hero h1 {
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--color-text-secondary);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            animation: slideUp 0.8s ease 0.1s forwards;
+            opacity: 0;
+        }
+
+        /* Articles Grid */
+        .articles-section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Article Card */
+        .article-card {
+            background-color: var(--color-surface);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid var(--color-border);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-border-light);
+        }
+
+        .article-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: var(--color-surface-light);
+        }
+
+        .article-content {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .article-excerpt {
+            color: var(--color-text-secondary);
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--color-text-muted);
+            font-size: 0.875rem;
+            margin-top: auto;
+        }
+
+        .article-category {
+            background-color: var(--color-surface-light);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        /* Article Detail Page */
+        .article-detail {
+            padding: 4rem 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+        }
+
+        .article-detail-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: var(--radius-lg);
+            margin-bottom: 2rem;
+        }
+
+        .article-detail-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-text-muted);
+        }
+
+        .article-author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .article-body {
+            font-size: 1.125rem;
+            line-height: 1.8;
+        }
+
+        .article-body p {
+            margin-bottom: 1.75rem;
+        }
+
+        .article-body h2, .article-body h3 {
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        /* Search Results */
+        .search-results {
+            padding: 4rem 0;
+        }
+
+        .results-count {
+            color: var(--color-text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .result-item {
+            background-color: var(--color-surface);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--color-border);
+            transition: var(--transition);
+        }
+
+        .result-item:hover {
+            border-color: var(--color-border-light);
+            transform: translateX(5px);
+        }
+
+        .result-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-excerpt {
+            color: var(--color-text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .result-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--color-text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Admin Login */
+        .admin-login {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            background-color: var(--color-bg);
+        }
+
+        .login-card {
+            background-color: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--color-border);
+        }
+
+        .login-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-error {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--color-error);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--color-error);
+        }
+
+        /* Admin CMS */
+        .admin-cms {
+            display: flex;
+            min-height: 100vh;
+            background-color: var(--color-bg);
+        }
+
+        .admin-sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--color-surface);
+            border-right: 1px solid var(--color-border);
+            padding: 2rem 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .admin-logo {
+            padding: 0 2rem 2rem;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 2rem;
+        }
+
+        .admin-nav {
+            padding: 0 1rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1rem;
+            color: var(--color-text-secondary);
+            border-radius: var(--radius);
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background-color: var(--color-surface-light);
+            color: var(--color-text);
+        }
+
+        .nav-item.active {
+            background-color: var(--color-surface-light);
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+
+        .admin-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+        }
+
+        .admin-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .admin-title {
+            font-size: 1.75rem;
+        }
+
+        /* CMS Dashboard */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background-color: var(--color-surface);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            border: 1px solid var(--color-border);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--color-text-secondary);
+        }
+
+        /* Article Management */
+        .article-list {
+            background-color: var(--color-surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--color-border);
+            overflow: hidden;
+        }
+
+        .article-list-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 150px;
+            padding: 1rem 1.5rem;
+            background-color: var(--color-surface-light);
+            border-bottom: 1px solid var(--color-border);
+            font-weight: 600;
+        }
+
+        .article-list-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 150px;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--color-border);
+            align-items: center;
+        }
+
+        .article-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .article-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Article Editor */
+        .editor-container {
+            background-color: var(--color-surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--color-border);
+            overflow: hidden;
+        }
+
+        .editor-toolbar {
+            padding: 1rem;
+            border-bottom: 1px solid var(--color-border);
+            background-color: var(--color-surface-light);
+        }
+
+        .editor-content {
+            min-height: 500px;
+            padding: 1.5rem;
+        }
+
+        .editor-preview {
+            padding: 1.5rem;
+            border-top: 1px solid var(--color-border);
+            background-color: var(--color-surface-light);
+        }
+
+        /* Image Upload */
+        .image-upload-area {
+            border: 2px dashed var(--color-border);
+            border-radius: var(--radius);
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 1.5rem;
+        }
+
+        .image-upload-area:hover {
+            border-color: var(--color-accent);
+            background-color: rgba(58, 134, 255, 0.05);
+        }
+
+        .uploaded-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .uploaded-image {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            height: 150px;
+        }
+
+        .uploaded-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Search Management */
+        .search-index {
+            background-color: var(--color-surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--color-border);
+            padding: 1.5rem;
+        }
+
+        .index-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .index-item {
+            background-color: var(--color-surface-light);
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--color-surface);
+            padding: 3rem 0;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--color-border);
+            color: var(--color-text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .admin-sidebar {
+                width: 80px;
+            }
+            
+            .admin-content {
+                margin-left: 80px;
+            }
+            
+            .nav-item span {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                height: auto;
+                padding: 1rem 0;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+            }
+            
+            .search-container {
+                margin: 1rem 0;
+                max-width: 100%;
+                order: 3;
+            }
+            
+            .hero {
+                padding: 3rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+            
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+            
+            .admin-content {
+                margin-left: 0;
+            }
+            
+            .admin-cms {
+                flex-direction: column;
+            }
+            
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .article-detail-image {
+                height: 250px;
+            }
+            
+            .login-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .article-list-header, .article-list-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Public Website -->
+    <div id="public-website" class="visible">
+        <!-- Header -->
+        <header class="header">
+            <div class="container header-content">
+                <div class="logo">
+                    <i class="fas fa-newspaper"></i>
+                    <span>ArticleHub</span>
+                </div>
+                
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="search-input" class="search-input" placeholder="Search articles...">
+                </div>
+                
+                <div id="logo-upload-container" class="hidden">
+                    <input type="file" id="logo-upload" accept="image/*" class="hidden">
+                    <button id="change-logo-btn" class="btn btn-secondary">Change Logo</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Homepage -->
+            <div id="homepage" class="visible">
+                <!-- Hero Section -->
+                <section class="hero">
+                    <div class="container text-center">
+                        <h1 class="fade-in">Explore Thought-Provoking Articles</h1>
+                        <p class="slide-up">Discover in-depth analysis, expert insights, and compelling stories from our network of writers and thinkers.</p>
+                        <div class="slide-up" style="animation-delay: 0.2s;">
+                            <a href="#featured" class="btn btn-primary">Start Reading</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Featured Articles -->
+                <section id="featured" class="articles-section">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>Featured Articles</h2>
+                            <a href="#all-articles" class="btn btn-secondary">View All</a>
+                        </div>
+                        
+                        <div id="featured-articles" class="articles-grid">
+                            <!-- Featured articles will be loaded here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Latest Articles -->
+                <section id="all-articles" class="articles-section">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>Latest Articles</h2>
+                        </div>
+                        
+                        <div id="latest-articles" class="articles-grid">
+                            <!-- Latest articles will be loaded here -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Article Detail Page -->
+            <div id="article-detail" class="hidden">
+                <div class="container article-detail">
+                    <!-- Article content will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Search Results -->
+            <div id="search-results" class="hidden">
+                <div class="container search-results">
+                    <h2>Search Results</h2>
+                    <div id="results-count" class="results-count"></div>
+                    <div id="results-container">
+                        <!-- Search results will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h4>ArticleHub</h4>
+                        <p>A modern publishing platform for thought-provoking content and analysis.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Categories</h4>
+                        <ul class="footer-links" id="categories-list">
+                            <!-- Categories will be loaded here -->
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul class="footer-links">
+                            <li><a href="#homepage">Home</a></li>
+                            <li><a href="#featured">Featured</a></li>
+                            <li><a href="#all-articles">Latest</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <p>&copy; <span id="current-year"></span> ArticleHub. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Admin Login -->
+    <div id="admin-login" class="admin-login hidden">
+        <div class="login-card">
+            <h2 class="login-title">Admin Login</h2>
+            <div id="login-error" class="login-error hidden">Invalid credentials. Please try again.</div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" id="username" class="form-control" placeholder="Enter admin username">
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter admin password">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login to CMS</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin CMS -->
+    <div id="admin-cms" class="admin-cms hidden">
+        <!-- Sidebar -->
+        <div class="admin-sidebar">
+            <div class="admin-logo">
+                <div class="logo">
+                    <i class="fas fa-newspaper"></i>
+                    <span>CMS</span>
+                </div>
+            </div>
+            
+            <div class="admin-nav">
+                <div class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="nav-item" data-section="articles">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Articles</span>
+                </div>
+                <div class="nav-item" data-section="editor">
+                    <i class="fas fa-edit"></i>
+                    <span>Editor</span>
+                </div>
+                <div class="nav-item" data-section="media">
+                    <i class="fas fa-image"></i>
+                    <span>Media</span>
+                </div>
+                <div class="nav-item" data-section="categories">
+                    <i class="fas fa-tags"></i>
+                    <span>Categories</span>
+                </div>
+                <div class="nav-item" data-section="search">
+                    <i class="fas fa-search"></i>
+                    <span>Search</span>
+                </div>
+                <div class="nav-item" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </div>
+                <div class="nav-item" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="admin-content">
+            <!-- Dashboard -->
+            <div id="dashboard-section" class="cms-section visible">
+                <div class="admin-header">
+                    <h2 class="admin-title">Dashboard</h2>
+                    <div class="btn btn-primary" id="new-article-btn">New Article</div>
+                </div>
+                
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="total-articles">0</div>
+                        <div class="stat-label">Total Articles</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="published-articles">0</div>
+                        <div class="stat-label">Published</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="total-categories">0</div>
+                        <div class="stat-label">Categories</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="total-views">0</div>
+                        <div class="stat-label">Total Views</div>
+                    </div>
+                </div>
+                
+                <h3>Recent Articles</h3>
+                <div class="article-list">
+                    <div class="article-list-header">
+                        <div>Title</div>
+                        <div>Status</div>
+                        <div>Date</div>
+                        <div>Actions</div>
+                    </div>
+                    <div id="recent-articles-list">
+                        <!-- Recent articles will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Articles Management -->
+            <div id="articles-section" class="cms-section hidden">
+                <div class="admin-header">
+                    <h2 class="admin-title">Articles</h2>
+                    <div class="btn btn-primary" id="add-article-btn">Add New Article</div>
+                </div>
+                
+                <div class="article-list">
+                    <div class="article-list-header">
+                        <div>Title</div>
+                        <div>Category</div>
+                        <div>Date</div>
+                        <div>Actions</div>
+                    </div>
+                    <div id="all-articles-list">
+                        <!-- All articles will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Article Editor -->
+            <div id="editor-section" class="cms-section hidden">
+                <div class="admin-header">
+                    <h2 class="admin-title">Article Editor</h2>
+                    <div>
+                        <button id="save-draft-btn" class="btn btn-secondary">Save Draft</button>
+                        <button id="publish-article-btn" class="btn btn-primary">Publish</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editor-title" class="form-label">Article Title</label>
+                    <input type="text" id="editor-title" class="form-control" placeholder="Enter article title">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editor-excerpt" class="form-label">Excerpt</label>
+                    <textarea id="editor-excerpt" class="form-control" placeholder="Enter a brief excerpt for the article"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editor-content" class="form-label">Content</label>
+                    <div id="editor-content" class="editor-container">
+                        <div class="editor-toolbar">
+                            <button type="button" class="btn btn-secondary" data-command="bold"><i class="fas fa-bold"></i></button>
+                            <button type="button" class="btn btn-secondary" data-command="italic"><i class="fas fa-italic"></i></button>
+                            <button type="button" class="btn btn-secondary" data-command="underline"><i class="fas fa-underline"></i></button>
+                            <button type="button" class="btn btn-secondary" data-command="insertUnorderedList"><i class="fas fa-list-ul"></i></button>
+                            <button type="button" class="btn btn-secondary" data-command="insertOrderedList"><i class="fas fa-list-ol"></i></button>
+                            <button type="button" class="btn btn-secondary" data-command="createLink"><i class="fas fa-link"></i></button>
+                            <button type="button" class="btn btn-secondary" data-command="formatBlock" data-value="h2">H2</button>
+                            <button type="button" class="btn btn-secondary" data-command="formatBlock" data-value="h3">H3</button>
+                        </div>
+                        <div id="rich-text-editor" class="editor-content" contenteditable="true"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Featured Image</label>
+                    <div id="image-upload-area" class="image-upload-area">
+                        <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; margin-bottom: 1rem; color: var(--color-text-muted);"></i>
+                        <p>Click to upload or drag and drop</p>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem;">PNG, JPG, GIF up to 5MB</p>
+                        <input type="file" id="featured-image-upload" class="hidden" accept="image/*">
+                    </div>
+                    <div id="featured-image-preview" class="uploaded-images"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editor-category" class="form-label">Category</label>
+                    <select id="editor-category" class="form-control">
+                        <!-- Categories will be loaded here -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editor-tags" class="form-label">Tags (comma separated)</label>
+                    <input type="text" id="editor-tags" class="form-control" placeholder="technology, web development, programming">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editor-meta" class="form-label">Meta Description (for SEO)</label>
+                    <textarea id="editor-meta" class="form-control" placeholder="Enter meta description for SEO"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox" id="editor-featured" class="form-check-input">
+                        <label for="editor-featured" class="form-check-label">Feature this article</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Live Preview</label>
+                    <div class="editor-preview" id="live-preview">
+                        <!-- Live preview will be shown here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Media Management -->
+            <div id="media-section" class="cms-section hidden">
+                <div class="admin-header">
+                    <h2 class="admin-title">Media Library</h2>
+                    <div>
+                        <input type="file" id="media-upload" class="hidden" accept="image/*" multiple>
+                        <button id="upload-media-btn" class="btn btn-primary">Upload Images</button>
+                    </div>
+                </div>
+                
+                <div id="media-library" class="uploaded-images">
+                    <!-- Media items will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Categories Management -->
+            <div id="categories-section" class="cms-section hidden">
+                <div class="admin-header">
+                    <h2 class="admin-title">Categories</h2>
+                    <div>
+                        <input type="text" id="new-category-input" class="form-control" placeholder="New category name" style="display: inline-block; width: auto;">
+                        <button id="add-category-btn" class="btn btn-primary">Add Category</button>
+                    </div>
+                </div>
+                
+                <div id="categories-management" class="article-list">
+                    <div class="article-list-header">
+                        <div>Category Name</div>
+                        <div>Article Count</div>
+                        <div>Actions</div>
+                    </div>
+                    <div id="categories-list-admin">
+                        <!-- Categories will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Management -->
+            <div id="search-section" class="cms-section hidden">
+                <div class="admin-header">
+                    <h2 class="admin-title">Search Management</h2>
+                    <button id="rebuild-index-btn" class="btn btn-primary">Rebuild Search Index</button>
+                </div>
+                
+                <div class="search-index">
+                    <div class="index-stats">
+                        <div>
+                            <h3 id="indexed-articles">0</h3>
+                            <p>Indexed Articles</p>
+                        </div>
+                        <div>
+                            <h3 id="indexed-keywords">0</h3>
+                            <p>Indexed Keywords</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Search Ranking Factors</h3>
+                    <div class="form-group">
+                        <label class="form-label">Title Weight</label>
+                        <input type="range" id="title-weight" class="form-control" min="1" max="10" value="5">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Content Weight</label>
+                        <input type="range" id="content-weight" class="form-control" min="1" max="10" value="3">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Excerpt Weight</label>
+                        <input type="range" id="excerpt-weight" class="form-control" min="1" max="10" value="4">
+                    </div>
+                    
+                    <h3>Indexed Keywords</h3>
+                    <div id="keywords-list">
+                        <!-- Keywords will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings -->
+            <div id="settings-section" class="cms-section hidden">
+                <div class="admin-header">
+                    <h2 class="admin-title">Settings</h2>
+                </div>
+                
+                <div class="form-group">
+                    <label for="site-title" class="form-label">Site Title</label>
+                    <input type="text" id="site-title" class="form-control" value="ArticleHub">
+                </div>
+                
+                <div class="form-group">
+                    <label for="site-description" class="form-label">Site Description</label>
+                    <textarea id="site-description" class="form-control">A modern article publishing platform</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Site Logo</label>
+                    <div id="logo-preview-container">
+                        <!-- Logo preview will be shown here -->
+                    </div>
+                    <input type="file" id="logo-upload-setting" class="hidden" accept="image/*">
+                    <button id="upload-logo-btn" class="btn btn-secondary">Upload New Logo</button>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Animations</label>
+                    <div class="form-check">
+                        <input type="checkbox" id="enable-animations" class="form-check-input" checked>
+                        <label for="enable-animations" class="form-check-label">Enable text animations</label>
+                    </div>
+                </div>
+                
+                <button id="save-settings-btn" class="btn btn-primary">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // ============================================
+        // APPLICATION STATE AND CONFIGURATION
+        // ============================================
+        
+        // Admin credentials
+        const ADMIN_CREDENTIALS = {
+            username: "admin",
+            password: "securepassword123"
+        };
+        
+        // Special admin access trigger
+        const ADMIN_TRIGGER = ".$.";
+        
+        // Application state
+        const AppState = {
+            currentUser: null,
+            isAdmin: false,
+            currentArticle: null,
+            currentView: 'homepage',
+            searchQuery: '',
+            editorContent: '',
+            articles: [],
+            categories: [],
+            searchIndex: {},
+            settings: {
+                siteTitle: 'ArticleHub',
+                siteDescription: 'A modern article publishing platform',
+                enableAnimations: true,
+                searchWeights: {
+                    title: 5,
+                    content: 3,
+                    excerpt: 4
+                }
+            },
+            media: []
+        };
+        
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+        
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        
+        function initializeApp() {
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            
+            // Load data from localStorage
+            loadFromStorage();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Initialize public website
+            if (AppState.currentView === 'homepage') {
+                renderHomepage();
+            }
+            
+            // Check if we're coming from admin trigger
+            checkAdminAccess();
+        }
+        
+        function loadFromStorage() {
+            // Try to load data from localStorage
+            const savedArticles = localStorage.getItem('articles');
+            const savedCategories = localStorage.getItem('categories');
+            const savedSettings = localStorage.getItem('settings');
+            const savedMedia = localStorage.getItem('media');
+            const savedSearchIndex = localStorage.getItem('searchIndex');
+            
+            if (savedArticles) {
+                AppState.articles = JSON.parse(savedArticles);
+            } else {
+                // Load sample articles if none exist
+                loadSampleArticles();
+            }
+            
+            if (savedCategories) {
+                AppState.categories = JSON.parse(savedCategories);
+            } else {
+                // Load sample categories
+                loadSampleCategories();
+            }
+            
+            if (savedSettings) {
+                AppState.settings = JSON.parse(savedSettings);
+            }
+            
+            if (savedMedia) {
+                AppState.media = JSON.parse(savedMedia);
+            }
+            
+            if (savedSearchIndex) {
+                AppState.searchIndex = JSON.parse(savedSearchIndex);
+            } else {
+                // Build initial search index
+                rebuildSearchIndex();
+            }
+        }
+        
+        function loadSampleArticles() {
+            AppState.articles = [
+                {
+                    id: 1,
+                    title: "The Future of Web Development in 2024",
+                    excerpt: "Exploring the latest trends and technologies shaping the future of web development, from AI integration to new frameworks.",
+                    content: "<h2>The Evolution of Web Technologies</h2><p>Web development has undergone significant changes in recent years. The rise of JavaScript frameworks like React, Vue, and Angular has transformed how we build interactive user interfaces.</p><h2>AI Integration in Development</h2><p>Artificial Intelligence is becoming increasingly integrated into development workflows, from code completion tools to automated testing solutions.</p><h2>Performance Optimization</h2><p>With users expecting faster load times, performance optimization remains a critical focus for developers in 2024.</p>",
+                    author: "Alex Johnson",
+                    date: "2024-03-15",
+                    category: "Technology",
+                    tags: ["web development", "technology", "programming", "AI"],
+                    featuredImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    featured: true,
+                    published: true,
+                    metaDescription: "Exploring the latest trends and technologies shaping the future of web development in 2024.",
+                    views: 1245
+                },
+                {
+                    id: 2,
+                    title: "Sustainable Living in Urban Environments",
+                    excerpt: "How city dwellers can adopt sustainable practices to reduce their environmental impact while maintaining modern lifestyles.",
+                    content: "<h2>The Urban Sustainability Challenge</h2><p>Urban environments present unique challenges for sustainable living, but also offer opportunities for innovation.</p><h2>Energy Efficient Solutions</h2><p>From solar panels to smart home systems, technology is enabling more energy-efficient urban living.</p><h2>Community Initiatives</h2><p>Local community gardens, recycling programs, and shared resources are making cities more sustainable.</p>",
+                    author: "Maria Rodriguez",
+                    date: "2024-03-10",
+                    category: "Lifestyle",
+                    tags: ["sustainability", "urban living", "environment", "lifestyle"],
+                    featuredImage: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    featured: true,
+                    published: true,
+                    metaDescription: "Practical guide to sustainable living practices for urban dwellers looking to reduce their environmental impact.",
+                    views: 876
+                },
+                {
+                    id: 3,
+                    title: "The Psychology of Color in Marketing",
+                    excerpt: "Understanding how color influences consumer behavior and decision-making in digital marketing campaigns.",
+                    content: "<h2>Color Theory Basics</h2><p>Different colors evoke different emotional responses, which marketers can leverage to influence consumer behavior.</p><h2>Industry-Specific Color Choices</h2><p>Certain industries have established color conventions that consumers have come to expect and trust.</p><h2>Cultural Considerations</h2><p>Color meanings vary across cultures, making international marketing campaigns particularly challenging.</p>",
+                    author: "David Chen",
+                    date: "2024-03-05",
+                    category: "Marketing",
+                    tags: ["marketing", "psychology", "design", "business"],
+                    featuredImage: "https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    featured: false,
+                    published: true,
+                    metaDescription: "How color psychology influences consumer behavior and decision-making in marketing campaigns.",
+                    views: 542
+                }
+            ];
+            
+            saveToStorage('articles', AppState.articles);
+        }
+        
+        function loadSampleCategories() {
+            AppState.categories = [
+                { id: 1, name: "Technology", count: 1 },
+                { id: 2, name: "Lifestyle", count: 1 },
+                { id: 3, name: "Marketing", count: 1 },
+                { id: 4, name: "Science", count: 0 },
+                { id: 5, name: "Business", count: 0 }
+            ];
+            
+            saveToStorage('categories', AppState.categories);
+        }
+        
+        // ============================================
+        // EVENT LISTENERS SETUP
+        // ============================================
+        
+        function setupEventListeners() {
+            // Search functionality
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('keyup', function(e) {
+                    if (e.key === 'Enter') {
+                        handleSearch();
+                    }
+                    
+                    // Check for admin trigger
+                    if (this.value.includes(ADMIN_TRIGGER)) {
+                        handleAdminTrigger();
+                        this.value = '';
+                    }
+                });
+            }
+            
+            // Login form
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) {
+                loginForm.addEventListener('submit', handleLogin);
+            }
+            
+            // Logout button
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', handleLogout);
+            }
+            
+            // Navigation in CMS
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                if (item.id !== 'logout-btn') {
+                    item.addEventListener('click', function() {
+                        const section = this.getAttribute('data-section');
+                        switchCMSection(section);
+                    });
+                }
+            });
+            
+            // CMS buttons
+            const newArticleBtn = document.getElementById('new-article-btn');
+            if (newArticleBtn) {
+                newArticleBtn.addEventListener('click', () => {
+                    switchCMSection('editor');
+                    resetEditor();
+                });
+            }
+            
+            const addArticleBtn = document.getElementById('add-article-btn');
+            if (addArticleBtn) {
+                addArticleBtn.addEventListener('click', () => {
+                    switchCMSection('editor');
+                    resetEditor();
+                });
+            }
+            
+            // Editor buttons
+            const saveDraftBtn = document.getElementById('save-draft-btn');
+            if (saveDraftBtn) {
+                saveDraftBtn.addEventListener('click', saveArticleDraft);
+            }
+            
+            const publishArticleBtn = document.getElementById('publish-article-btn');
+            if (publishArticleBtn) {
+                publishArticleBtn.addEventListener('click', publishArticle);
+            }
+            
+            // Editor toolbar
+            const editorButtons = document.querySelectorAll('[data-command]');
+            editorButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const command = this.getAttribute('data-command');
+                    const value = this.getAttribute('data-value');
+                    
+                    if (command === 'createLink') {
+                        const url = prompt('Enter the URL:');
+                        if (url) {
+                            document.execCommand(command, false, url);
+                        }
+                    } else if (value) {
+                        document.execCommand(command, false, value);
+                    } else {
+                        document.execCommand(command, false, null);
+                    }
+                    
+                    updateEditorContent();
+                });
+            });
+            
+            // Image uploads
+            const featuredImageUpload = document.getElementById('featured-image-upload');
+            const imageUploadArea = document.getElementById('image-upload-area');
+            
+            if (featuredImageUpload && imageUploadArea) {
+                imageUploadArea.addEventListener('click', () => featuredImageUpload.click());
+                featuredImageUpload.addEventListener('change', handleImageUpload);
+            }
+            
+            // Media upload
+            const uploadMediaBtn = document.getElementById('upload-media-btn');
+            const mediaUpload = document.getElementById('media-upload');
+            
+            if (uploadMediaBtn && mediaUpload) {
+                uploadMediaBtn.addEventListener('click', () => mediaUpload.click());
+                mediaUpload.addEventListener('change', handleMediaUpload);
+            }
+            
+            // Category management
+            const addCategoryBtn = document.getElementById('add-category-btn');
+            if (addCategoryBtn) {
+                addCategoryBtn.addEventListener('click', addNewCategory);
+            }
+            
+            // Search management
+            const rebuildIndexBtn = document.getElementById('rebuild-index-btn');
+            if (rebuildIndexBtn) {
+                rebuildIndexBtn.addEventListener('click', rebuildSearchIndex);
+            }
+            
+            // Settings
+            const saveSettingsBtn = document.getElementById('save-settings-btn');
+            if (saveSettingsBtn) {
+                saveSettingsBtn.addEventListener('click', saveSettings);
+            }
+            
+            // Logo upload
+            const uploadLogoBtn = document.getElementById('upload-logo-btn');
+            const logoUploadSetting = document.getElementById('logo-upload-setting');
+            
+            if (uploadLogoBtn && logoUploadSetting) {
+                uploadLogoBtn.addEventListener('click', () => logoUploadSetting.click());
+                logoUploadSetting.addEventListener('change', handleLogoUpload);
+            }
+            
+            // Change logo on public site
+            const changeLogoBtn = document.getElementById('change-logo-btn');
+            const logoUpload = document.getElementById('logo-upload');
+            
+            if (changeLogoBtn && logoUpload) {
+                changeLogoBtn.addEventListener('click', () => logoUpload.click());
+                logoUpload.addEventListener('change', handleLogoUpload);
+            }
+            
+            // Real-time editor updates
+            const editorTitle = document.getElementById('editor-title');
+            const editorExcerpt = document.getElementById('editor-excerpt');
+            const richTextEditor = document.getElementById('rich-text-editor');
+            
+            if (editorTitle) editorTitle.addEventListener('input', updateLivePreview);
+            if (editorExcerpt) editorExcerpt.addEventListener('input', updateLivePreview);
+            if (richTextEditor) richTextEditor.addEventListener('input', updateEditorContent);
+            
+            // Search weight controls
+            const titleWeight = document.getElementById('title-weight');
+            const contentWeight = document.getElementById('content-weight');
+            const excerptWeight = document.getElementById('excerpt-weight');
+            
+            if (titleWeight) titleWeight.addEventListener('input', updateSearchWeights);
+            if (contentWeight) contentWeight.addEventListener('input', updateSearchWeights);
+            if (excerptWeight) excerptWeight.addEventListener('input', updateSearchWeights);
+        }
+        
+        // ============================================
+        // SEARCH SYSTEM
+        // ============================================
+        
+        function handleSearch() {
+            const searchInput = document.getElementById('search-input');
+            const query = searchInput.value.trim();
+            
+            if (query) {
+                AppState.searchQuery = query;
+                AppState.currentView = 'search-results';
+                
+                // Hide other views
+                document.getElementById('homepage').classList.add('hidden');
+                document.getElementById('article-detail').classList.add('hidden');
+                document.getElementById('search-results').classList.remove('hidden');
+                
+                // Perform search
+                const results = performSearch(query);
+                renderSearchResults(results);
+            }
+        }
+        
+        function performSearch(query) {
+            const results = [];
+            const terms = query.toLowerCase().split(' ');
+            
+            // Get search weights
+            const titleWeight = AppState.settings.searchWeights.title;
+            const contentWeight = AppState.settings.searchWeights.content;
+            const excerptWeight = AppState.settings.searchWeights.excerpt;
+            
+            // Search through all published articles
+            AppState.articles.forEach(article => {
+                if (!article.published) return;
+                
+                let score = 0;
+                let matches = [];
+                
+                // Check each search term
+                terms.forEach(term => {
+                    if (term.length < 2) return; // Ignore single characters
+                    
+                    // Exact match in title (highest weight)
+                    if (article.title.toLowerCase().includes(term)) {
+                        score += titleWeight * 3;
+                        matches.push(`Title: "${term}"`);
+                    }
+                    
+                    // Exact match in excerpt
+                    if (article.excerpt.toLowerCase().includes(term)) {
+                        score += excerptWeight * 2;
+                        matches.push(`Excerpt: "${term}"`);
+                    }
+                    
+                    // Exact match in content
+                    if (article.content.toLowerCase().includes(term)) {
+                        score += contentWeight;
+                        matches.push(`Content: "${term}"`);
+                    }
+                    
+                    // Match in tags
+                    if (article.tags && article.tags.some(tag => tag.toLowerCase().includes(term))) {
+                        score += 2;
+                        matches.push(`Tag: "${term}"`);
+                    }
+                    
+                    // Match in category
+                    if (article.category.toLowerCase().includes(term)) {
+                        score += 2;
+                        matches.push(`Category: "${term}"`);
+                    }
+                    
+                    // LSI (Latent Semantic Indexing) - simple implementation
+                    // Check for related terms based on the search term
+                    const relatedTerms = getLSITerms(term);
+                    relatedTerms.forEach(relatedTerm => {
+                        if (article.title.toLowerCase().includes(relatedTerm) ||
+                            article.excerpt.toLowerCase().includes(relatedTerm) ||
+                            article.content.toLowerCase().includes(relatedTerm)) {
+                            score += 1;
+                            matches.push(`Related: "${relatedTerm}"`);
+                        }
+                    });
+                });
+                
+                if (score > 0) {
+                    results.push({
+                        article: article,
+                        score: score,
+                        matches: [...new Set(matches)] // Remove duplicates
+                    });
+                }
+            });
+            
+            // Sort by score (descending)
+            results.sort((a, b) => b.score - a.score);
+            
+            return results;
+        }
+        
+        function getLSITerms(term) {
+            // Simple LSI term mapping
+            const lsiMap = {
+                'web': ['website', 'internet', 'online', 'digital', 'development'],
+                'develop': ['create', 'build', 'make', 'code', 'program'],
+                'tech': ['technology', 'digital', 'computer', 'software', 'hardware'],
+                'sustain': ['eco', 'green', 'environment', 'ecological', 'conservation'],
+                'market': ['advertise', 'promote', 'sell', 'business', 'commerce'],
+                'psychology': ['behavior', 'mind', 'mental', 'cognitive', 'emotional'],
+                'color': ['hue', 'tint', 'shade', 'palette', 'pigment'],
+                'urban': ['city', 'metropolitan', 'downtown', 'civic', 'municipal']
+            };
+            
+            // Find matching LSI terms
+            for (const key in lsiMap) {
+                if (term.includes(key)) {
+                    return lsiMap[key];
+                }
+            }
+            
+            return [];
+        }
+        
+        function rebuildSearchIndex() {
+            console.log('Rebuilding search index...');
+            
+            AppState.searchIndex = {
+                articles: {},
+                keywords: {}
+            };
+            
+            // Index all published articles
+            AppState.articles.forEach(article => {
+                if (!article.published) return;
+                
+                const articleId = article.id;
+                AppState.searchIndex.articles[articleId] = {
+                    title: article.title.toLowerCase(),
+                    excerpt: article.excerpt.toLowerCase(),
+                    content: article.content.toLowerCase(),
+                    tags: article.tags ? article.tags.map(tag => tag.toLowerCase()) : [],
+                    category: article.category.toLowerCase()
+                };
+                
+                // Extract keywords from article
+                const text = `${article.title} ${article.excerpt} ${article.content}`.toLowerCase();
+                const words = text.split(/\W+/).filter(word => word.length > 3);
+                
+                // Count word frequency
+                const wordCount = {};
+                words.forEach(word => {
+                    wordCount[word] = (wordCount[word] || 0) + 1;
+                });
+                
+                // Add to keywords index
+                for (const word in wordCount) {
+                    if (!AppState.searchIndex.keywords[word]) {
+                        AppState.searchIndex.keywords[word] = [];
+                    }
+                    
+                    if (!AppState.searchIndex.keywords[word].includes(articleId)) {
+                        AppState.searchIndex.keywords[word].push(articleId);
+                    }
+                }
+            });
+            
+            // Update UI
+            updateSearchStats();
+            
+            // Save to storage
+            saveToStorage('searchIndex', AppState.searchIndex);
+            
+            alert('Search index rebuilt successfully!');
+        }
+        
+        function updateSearchStats() {
+            const indexedArticles = document.getElementById('indexed-articles');
+            const indexedKeywords = document.getElementById('indexed-keywords');
+            
+            if (indexedArticles) {
+                indexedArticles.textContent = Object.keys(AppState.searchIndex.articles || {}).length;
+            }
+            
+            if (indexedKeywords) {
+                indexedKeywords.textContent = Object.keys(AppState.searchIndex.keywords || {}).length;
+            }
+        }
+        
+        function updateSearchWeights() {
+            const titleWeight = document.getElementById('title-weight');
+            const contentWeight = document.getElementById('content-weight');
+            const excerptWeight = document.getElementById('excerpt-weight');
+            
+            if (titleWeight && contentWeight && excerptWeight) {
+                AppState.settings.searchWeights = {
+                    title: parseInt(titleWeight.value),
+                    content: parseInt(contentWeight.value),
+                    excerpt: parseInt(excerptWeight.value)
+                };
+                
+                saveToStorage('settings', AppState.settings);
+            }
+        }
+        
+        // ============================================
+        // ADMIN ACCESS LOGIC
+        // ============================================
+        
+        function checkAdminAccess() {
+            // Check URL for admin access (simulating backend redirect)
+            const urlParams = new URLSearchParams(window.location.search);
+            const adminAccess = urlParams.get('admin');
+            
+            if (adminAccess === 'true' && !AppState.isAdmin) {
+                // Show login page
+                showAdminLogin();
+            }
+        }
+        
+        function handleAdminTrigger() {
+            console.log('Admin trigger detected');
+            
+            if (AppState.isAdmin) {
+                // Already logged in, show CMS
+                showAdminCMS();
+            } else {
+                // Not logged in, show login page
+                showAdminLogin();
+            }
+        }
+        
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                // Successful login
+                AppState.isAdmin = true;
+                AppState.currentUser = username;
+                
+                // Hide login error if shown
+                const loginError = document.getElementById('login-error');
+                if (loginError) {
+                    loginError.classList.add('hidden');
+                }
+                
+                // Show CMS
+                showAdminCMS();
+            } else {
+                // Show error
+                const loginError = document.getElementById('login-error');
+                if (loginError) {
+                    loginError.classList.remove('hidden');
+                }
+            }
+        }
+        
+        function handleLogout() {
+            AppState.isAdmin = false;
+            AppState.currentUser = null;
+            
+            // Show public website
+            showPublicWebsite();
+        }
+        
+        // ============================================
+        // VIEW MANAGEMENT
+        // ============================================
+        
+        function showPublicWebsite() {
+            document.getElementById('public-website').classList.remove('hidden');
+            document.getElementById('admin-login').classList.add('hidden');
+            document.getElementById('admin-cms').classList.add('hidden');
+            
+            // Reset to homepage
+            AppState.currentView = 'homepage';
+            document.getElementById('homepage').classList.remove('hidden');
+            document.getElementById('article-detail').classList.add('hidden');
+            document.getElementById('search-results').classList.add('hidden');
+            
+            // Clear search
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) searchInput.value = '';
+            
+            // Render homepage
+            renderHomepage();
+        }
+        
+        function showAdminLogin() {
+            document.getElementById('public-website').classList.add('hidden');
+            document.getElementById('admin-login').classList.remove('hidden');
+            document.getElementById('admin-cms').classList.add('hidden');
+            
+            // Clear login form
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) loginForm.reset();
+            
+            // Hide login error
+            const loginError = document.getElementById('login-error');
+            if (loginError) {
+                loginError.classList.add('hidden');
+            }
+        }
+        
+        function showAdminCMS() {
+            document.getElementById('public-website').classList.add('hidden');
+            document.getElementById('admin-login').classList.add('hidden');
+            document.getElementById('admin-cms').classList.remove('hidden');
+            
+            // Load CMS data
+            loadCMSDashboard();
+        }
+        
+        function switchCMSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.cms-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected section
+            document.getElementById(`${sectionId}-section`).classList.remove('hidden');
+            
+            // Update active nav item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            document.querySelector(`.nav-item[data-section="${sectionId}"]`).classList.add('active');
+            
+            // Load section-specific data
+            switch(sectionId) {
+                case 'dashboard':
+                    loadCMSDashboard();
+                    break;
+                case 'articles':
+                    loadArticlesManagement();
+                    break;
+                case 'editor':
+                    // Already handled
+                    break;
+                case 'media':
+                    loadMediaLibrary();
+                    break;
+                case 'categories':
+                    loadCategoriesManagement();
+                    break;
+                case 'search':
+                    loadSearchManagement();
+                    break;
+                case 'settings':
+                    loadSettings();
+                    break;
+            }
+        }
+        
+        // ============================================
+        // RENDERING FUNCTIONS
+        // ============================================
+        
+        function renderHomepage() {
+            // Render featured articles
+            renderFeaturedArticles();
+            
+            // Render latest articles
+            renderLatestArticles();
+            
+            // Render categories in footer
+            renderCategories();
+            
+            // Show/hide logo management based on admin status
+            const logoUploadContainer = document.getElementById('logo-upload-container');
+            if (logoUploadContainer) {
+                if (AppState.isAdmin) {
+                    logoUploadContainer.classList.remove('hidden');
+                } else {
+                    logoUploadContainer.classList.add('hidden');
+                }
+            }
+        }
+        
+        function renderFeaturedArticles() {
+            const container = document.getElementById('featured-articles');
+            if (!container) return;
+            
+            // Get featured articles
+            const featuredArticles = AppState.articles.filter(article => 
+                article.featured && article.published
+            ).slice(0, 3);
+            
+            if (featuredArticles.length === 0) {
+                container.innerHTML = '<p class="text-center">No featured articles yet.</p>';
+                return;
+            }
+            
+            container.innerHTML = featuredArticles.map(article => `
+                <div class="article-card" data-id="${article.id}">
+                    <img src="${article.featuredImage}" alt="${article.title}" class="article-image">
+                    <div class="article-content">
+                        <h3 class="article-title">${article.title}</h3>
+                        <p class="article-excerpt">${article.excerpt}</p>
+                        <div class="article-meta">
+                            <div>
+                                <span class="article-author">${article.author}</span>
+                                <span> • ${formatDate(article.date)}</span>
+                            </div>
+                            <span class="article-category">${article.category}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Add click events to article cards
+            container.querySelectorAll('.article-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const articleId = parseInt(this.getAttribute('data-id'));
+                    viewArticle(articleId);
+                });
+            });
+        }
+        
+        function renderLatestArticles() {
+            const container = document.getElementById('latest-articles');
+            if (!container) return;
+            
+            // Get latest published articles
+            const latestArticles = AppState.articles
+                .filter(article => article.published)
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 6);
+            
+            if (latestArticles.length === 0) {
+                container.innerHTML = '<p class="text-center">No articles yet. Check back soon!</p>';
+                return;
+            }
+            
+            container.innerHTML = latestArticles.map(article => `
+                <div class="article-card" data-id="${article.id}">
+                    <img src="${article.featuredImage}" alt="${article.title}" class="article-image">
+                    <div class="article-content">
+                        <h3 class="article-title">${article.title}</h3>
+                        <p class="article-excerpt">${article.excerpt}</p>
+                        <div class="article-meta">
+                            <div>
+                                <span class="article-author">${article.author}</span>
+                                <span> • ${formatDate(article.date)}</span>
+                            </div>
+                            <span class="article-category">${article.category}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Add click events to article cards
+            container.querySelectorAll('.article-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const articleId = parseInt(this.getAttribute('data-id'));
+                    viewArticle(articleId);
+                });
+            });
+        }
+        
+        function renderCategories() {
+            const container = document.getElementById('categories-list');
+            if (!container) return;
+            
+            // Get unique categories with article counts
+            const categoryCounts = {};
+            AppState.articles.forEach(article => {
+                if (article.published) {
+                    categoryCounts[article.category] = (categoryCounts[article.category] || 0) + 1;
+                }
+            });
+            
+            const categories = Object.keys(categoryCounts).sort();
+            
+            if (categories.length === 0) {
+                container.innerHTML = '<li>No categories yet</li>';
+                return;
+            }
+            
+            container.innerHTML = categories.map(category => `
+                <li><a href="#" data-category="${category}">${category} (${categoryCounts[category]})</a></li>
+            `).join('');
+            
+            // Add click events to category links
+            container.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const category = this.getAttribute('data-category');
+                    filterArticlesByCategory(category);
+                });
+            });
+        }
+        
+        function renderSearchResults(results) {
+            const container = document.getElementById('results-container');
+            const countElement = document.getElementById('results-count');
+            
+            if (!container || !countElement) return;
+            
+            if (results.length === 0) {
+                countElement.textContent = `No results found for "${AppState.searchQuery}"`;
+                container.innerHTML = '<p>Try different keywords or check your spelling.</p>';
+                return;
+            }
+            
+            countElement.textContent = `${results.length} results found for "${AppState.searchQuery}"`;
+            
+            container.innerHTML = results.map(result => {
+                const article = result.article;
+                return `
+                    <div class="result-item" data-id="${article.id}">
+                        <h3 class="result-title">${article.title}</h3>
+                        <p class="result-excerpt">${article.excerpt}</p>
+                        <div class="result-meta">
+                            <span>${article.author}</span>
+                            <span> • ${formatDate(article.date)}</span>
+                            <span> • ${article.category}</span>
+                            <span> • Score: ${result.score.toFixed(1)}</span>
+                        </div>
+                        ${result.matches.length > 0 ? `
+                            <div style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--color-text-muted);">
+                                Matches: ${result.matches.slice(0, 3).join(', ')}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+            
+            // Add click events to result items
+            container.querySelectorAll('.result-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const articleId = parseInt(this.getAttribute('data-id'));
+                    viewArticle(articleId);
+                });
+            });
+        }
+        
+        function viewArticle(articleId) {
+            const article = AppState.articles.find(a => a.id === articleId);
+            
+            if (!article) {
+                alert('Article not found');
+                return;
+            }
+            
+            // Update article views
+            article.views = (article.views || 0) + 1;
+            saveToStorage('articles', AppState.articles);
+            
+            // Set current article
+            AppState.currentArticle = article;
+            AppState.currentView = 'article-detail';
+            
+            // Show article detail view
+            document.getElementById('homepage').classList.add('hidden');
+            document.getElementById('search-results').classList.add('hidden');
+            document.getElementById('article-detail').classList.remove('hidden');
+            
+            // Render article
+            renderArticleDetail(article);
+        }
+        
+        function renderArticleDetail(article) {
+            const container = document.querySelector('.article-detail');
+            if (!container) return;
+            
+            container.innerHTML = `
+                <article>
+                    <div class="article-header">
+                        <h1>${article.title}</h1>
+                        <div class="article-detail-meta">
+                            <div class="article-author">
+                                <i class="fas fa-user"></i>
+                                <span>${article.author}</span>
+                            </div>
+                            <div>
+                                <i class="far fa-calendar"></i>
+                                <span>${formatDate(article.date)}</span>
+                            </div>
+                            <div>
+                                <i class="far fa-eye"></i>
+                                <span>${article.views || 0} views</span>
+                            </div>
+                        </div>
+                        <div class="article-tags">
+                            ${article.tags.map(tag => `<span class="article-category">${tag}</span>`).join(' ')}
+                        </div>
+                        <img src="${article.featuredImage}" alt="${article.title}" class="article-detail-image">
+                    </div>
+                    <div class="article-body">
+                        ${article.content}
+                    </div>
+                </article>
+                <div style="margin-top: 3rem; text-align: center;">
+                    <a href="#homepage" class="btn btn-secondary">Back to Home</a>
+                </div>
+            `;
+            
+            // Add back button functionality
+            const backButton = container.querySelector('a[href="#homepage"]');
+            if (backButton) {
+                backButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showPublicWebsite();
+                });
+            }
+        }
+        
+        function filterArticlesByCategory(category) {
+            // Update search input with category
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.value = category;
+                handleSearch();
+            }
+        }
+        
+        // ============================================
+        // CMS FUNCTIONS
+        // ============================================
+        
+        function loadCMSDashboard() {
+            // Update stats
+            const totalArticles = document.getElementById('total-articles');
+            const publishedArticles = document.getElementById('published-articles');
+            const totalCategories = document.getElementById('total-categories');
+            const totalViews = document.getElementById('total-views');
+            
+            if (totalArticles) {
+                totalArticles.textContent = AppState.articles.length;
+            }
+            
+            if (publishedArticles) {
+                const publishedCount = AppState.articles.filter(article => article.published).length;
+                publishedArticles.textContent = publishedCount;
+            }
+            
+            if (totalCategories) {
+                totalCategories.textContent = AppState.categories.length;
+            }
+            
+            if (totalViews) {
+                const views = AppState.articles.reduce((sum, article) => sum + (article.views || 0), 0);
+                totalViews.textContent = views;
+            }
+            
+            // Load recent articles
+            loadRecentArticles();
+        }
+        
+        function loadRecentArticles() {
+            const container = document.getElementById('recent-articles-list');
+            if (!container) return;
+            
+            // Get recent articles (limit 5)
+            const recentArticles = AppState.articles
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 5);
+            
+            if (recentArticles.length === 0) {
+                container.innerHTML = '<div class="article-list-item"><div>No articles yet</div></div>';
+                return;
+            }
+            
+            container.innerHTML = recentArticles.map(article => `
+                <div class="article-list-item">
+                    <div>${article.title}</div>
+                    <div>${article.published ? '<span style="color: var(--color-success);">Published</span>' : '<span style="color: var(--color-warning);">Draft</span>'}</div>
+                    <div>${formatDate(article.date)}</div>
+                    <div class="article-actions">
+                        <button class="btn btn-secondary" data-action="edit" data-id="${article.id}">Edit</button>
+                        <button class="btn btn-danger" data-action="delete" data-id="${article.id}">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Add event listeners to action buttons
+            container.querySelectorAll('button[data-action="edit"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const articleId = parseInt(this.getAttribute('data-id'));
+                    editArticle(articleId);
+                });
+            });
+            
+            container.querySelectorAll('button[data-action="delete"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const articleId = parseInt(this.getAttribute('data-id'));
+                    deleteArticle(articleId);
+                });
+            });
+        }
+        
+        function loadArticlesManagement() {
+            const container = document.getElementById('all-articles-list');
+            if (!container) return;
+            
+            if (AppState.articles.length === 0) {
+                container.innerHTML = '<div class="article-list-item"><div>No articles yet</div></div>';
+                return;
+            }
+            
+            container.innerHTML = AppState.articles.map(article => `
+                <div class="article-list-item">
+                    <div>${article.title}</div>
+                    <div>${article.category}</div>
+                    <div>${formatDate(article.date)}</div>
+                    <div class="article-actions">
+                        <button class="btn btn-secondary" data-action="edit" data-id="${article.id}">Edit</button>
+                        <button class="btn ${article.published ? 'btn-secondary' : 'btn-primary'}" data-action="toggle-publish" data-id="${article.id}">
+                            ${article.published ? 'Unpublish' : 'Publish'}
+                        </button>
+                        <button class="btn btn-danger" data-action="delete" data-id="${article.id}">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Add event listeners to action buttons
+            container.querySelectorAll('button[data-action="edit"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const articleId = parseInt(this.getAttribute('data-id'));
+                    editArticle(articleId);
+                });
+            });
+            
+            container.querySelectorAll('button[data-action="toggle-publish"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const articleId = parseInt(this.getAttribute('data-id'));
+                    toggleArticlePublish(articleId);
+                });
+            });
+            
+            container.querySelectorAll('button[data-action="delete"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const articleId = parseInt(this.getAttribute('data-id'));
+                    deleteArticle(articleId);
+                });
+            });
+        }
+        
+        function loadMediaLibrary() {
+            const container = document.getElementById('media-library');
+            if (!container) return;
+            
+            if (AppState.media.length === 0) {
+                container.innerHTML = '<p>No media uploaded yet.</p>';
+                return;
+            }
+            
+            container.innerHTML = AppState.media.map((media, index) => `
+                <div class="uploaded-image">
+                    <img src="${media.url}" alt="Uploaded image ${index + 1}">
+                    <button class="btn btn-danger" style="position: absolute; top: 5px; right: 5px; padding: 0.25rem 0.5rem; font-size: 0.75rem;" data-index="${index}">×</button>
+                </div>
+            `).join('');
+            
+            // Add delete event listeners
+            container.querySelectorAll('.uploaded-image button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    deleteMediaItem(index);
+                });
+            });
+        }
+        
+        function loadCategoriesManagement() {
+            const container = document.getElementById('categories-list-admin');
+            if (!container) return;
+            
+            if (AppState.categories.length === 0) {
+                container.innerHTML = '<div class="article-list-item"><div>No categories yet</div></div>';
+                return;
+            }
+            
+            container.innerHTML = AppState.categories.map(category => `
+                <div class="article-list-item">
+                    <div>${category.name}</div>
+                    <div>${category.count || 0} articles</div>
+                    <div class="article-actions">
+                        <button class="btn btn-secondary" data-action="edit-category" data-id="${category.id}">Edit</button>
+                        <button class="btn btn-danger" data-action="delete-category" data-id="${category.id}">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Add event listeners to action buttons
+            container.querySelectorAll('button[data-action="edit-category"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const categoryId = parseInt(this.getAttribute('data-id'));
+                    editCategory(categoryId);
+                });
+            });
+            
+            container.querySelectorAll('button[data-action="delete-category"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const categoryId = parseInt(this.getAttribute('data-id'));
+                    deleteCategory(categoryId);
+                });
+            });
+        }
+        
+        function loadSearchManagement() {
+            // Update search stats
+            updateSearchStats();
+            
+            // Load search weights
+            const titleWeight = document.getElementById('title-weight');
+            const contentWeight = document.getElementById('content-weight');
+            const excerptWeight = document.getElementById('excerpt-weight');
+            
+            if (titleWeight && contentWeight && excerptWeight) {
+                titleWeight.value = AppState.settings.searchWeights.title;
+                contentWeight.value = AppState.settings.searchWeights.content;
+                excerptWeight.value = AppState.settings.searchWeights.excerpt;
+            }
+            
+            // Load keywords
+            const container = document.getElementById('keywords-list');
+            if (!container) return;
+            
+            const keywords = Object.keys(AppState.searchIndex.keywords || {});
+            
+            if (keywords.length === 0) {
+                container.innerHTML = '<p>No keywords indexed yet.</p>';
+                return;
+            }
+            
+            // Show top 20 keywords
+            const topKeywords = keywords
+                .sort((a, b) => AppState.searchIndex.keywords[b].length - AppState.searchIndex.keywords[a].length)
+                .slice(0, 20);
+            
+            container.innerHTML = topKeywords.map(keyword => {
+                const articleCount = AppState.searchIndex.keywords[keyword].length;
+                return `
+                    <div class="index-item">
+                        <strong>${keyword}</strong> (${articleCount} article${articleCount !== 1 ? 's' : ''})
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function loadSettings() {
+            // Load current settings
+            const siteTitle = document.getElementById('site-title');
+            const siteDescription = document.getElementById('site-description');
+            const enableAnimations = document.getElementById('enable-animations');
+            
+            if (siteTitle) siteTitle.value = AppState.settings.siteTitle;
+            if (siteDescription) siteDescription.value = AppState.settings.siteDescription;
+            if (enableAnimations) enableAnimations.checked = AppState.settings.enableAnimations;
+            
+            // Load logo preview
+            loadLogoPreview();
+        }
+        
+        function loadLogoPreview() {
+            const container = document.getElementById('logo-preview-container');
+            if (!container) return;
+            
+            // Check if logo exists in localStorage
+            const logo = localStorage.getItem('siteLogo');
+            
+            if (logo) {
+                container.innerHTML = `
+                    <p>Current Logo:</p>
+                    <img src="${logo}" alt="Site Logo" style="max-width: 200px; margin-bottom: 1rem;">
+                `;
+            } else {
+                container.innerHTML = '<p>No logo uploaded yet.</p>';
+            }
+        }
+        
+        // ============================================
+        // ARTICLE EDITOR FUNCTIONS
+        // ============================================
+        
+        function resetEditor() {
+            // Clear editor fields
+            document.getElementById('editor-title').value = '';
+            document.getElementById('editor-excerpt').value = '';
+            document.getElementById('rich-text-editor').innerHTML = '';
+            document.getElementById('editor-tags').value = '';
+            document.getElementById('editor-meta').value = '';
+            document.getElementById('editor-featured').checked = false;
+            
+            // Reset featured image preview
+            const featuredImagePreview = document.getElementById('featured-image-preview');
+            if (featuredImagePreview) {
+                featuredImagePreview.innerHTML = '';
+            }
+            
+            // Reset current article
+            AppState.currentArticle = null;
+            
+            // Update live preview
+            updateLivePreview();
+        }
+        
+        function editArticle(articleId) {
+            const article = AppState.articles.find(a => a.id === articleId);
+            
+            if (!article) {
+                alert('Article not found');
+                return;
+            }
+            
+            // Switch to editor section
+            switchCMSection('editor');
+            
+            // Set current article
+            AppState.currentArticle = article;
+            
+            // Populate editor fields
+            document.getElementById('editor-title').value = article.title;
+            document.getElementById('editor-excerpt').value = article.excerpt;
+            document.getElementById('rich-text-editor').innerHTML = article.content;
+            document.getElementById('editor-tags').value = article.tags ? article.tags.join(', ') : '';
+            document.getElementById('editor-meta').value = article.metaDescription || '';
+            document.getElementById('editor-featured').checked = article.featured || false;
+            
+            // Load category select
+            loadCategorySelect(article.category);
+            
+            // Load featured image preview
+            const featuredImagePreview = document.getElementById('featured-image-preview');
+            if (featuredImagePreview && article.featuredImage) {
+                featuredImagePreview.innerHTML = `
+                    <div class="uploaded-image">
+                        <img src="${article.featuredImage}" alt="Featured Image">
+                    </div>
+                `;
+            }
+            
+            // Update live preview
+            updateLivePreview();
+        }
+        
+        function loadCategorySelect(selectedCategory) {
+            const select = document.getElementById('editor-category');
+            if (!select) return;
+            
+            select.innerHTML = AppState.categories.map(category => 
+                `<option value="${category.name}" ${category.name === selectedCategory ? 'selected' : ''}>${category.name}</option>`
+            ).join('');
+        }
+        
+        function updateEditorContent() {
+            const editor = document.getElementById('rich-text-editor');
+            if (editor) {
+                AppState.editorContent = editor.innerHTML;
+                updateLivePreview();
+            }
+        }
+        
+        function updateLivePreview() {
+            const preview = document.getElementById('live-preview');
+            if (!preview) return;
+            
+            const title = document.getElementById('editor-title').value || 'Article Title';
+            const excerpt = document.getElementById('editor-excerpt').value || 'Article excerpt will appear here...';
+            const content = AppState.editorContent || '<p>Article content will appear here...</p>';
+            
+            preview.innerHTML = `
+                <h2>${title}</h2>
+                <p><em>${excerpt}</em></p>
+                <div>${content}</div>
+            `;
+        }
+        
+        function saveArticleDraft() {
+            const article = getArticleFromForm();
+            if (!article) return;
+            
+            // Set as draft
+            article.published = false;
+            
+            // Save article
+            saveArticle(article);
+            
+            alert('Draft saved successfully!');
+        }
+        
+        function publishArticle() {
+            const article = getArticleFromForm();
+            if (!article) return;
+            
+            // Validate required fields
+            if (!article.title.trim()) {
+                alert('Please enter an article title');
+                return;
+            }
+            
+            if (!article.content.trim()) {
+                alert('Please enter article content');
+                return;
+            }
+            
+            // Set as published
+            article.published = true;
+            article.date = new Date().toISOString().split('T')[0];
+            
+            // Save article
+            saveArticle(article);
+            
+            alert('Article published successfully!');
+            
+            // Switch to articles section
+            switchCMSection('articles');
+        }
+        
+        function getArticleFromForm() {
+            const title = document.getElementById('editor-title').value;
+            const excerpt = document.getElementById('editor-excerpt').value;
+            const content = AppState.editorContent;
+            const category = document.getElementById('editor-category').value;
+            const tags = document.getElementById('editor-tags').value.split(',').map(tag => tag.trim()).filter(tag => tag);
+            const metaDescription = document.getElementById('editor-meta').value;
+            const featured = document.getElementById('editor-featured').checked;
+            
+            // Get featured image
+            const featuredImagePreview = document.getElementById('featured-image-preview');
+            let featuredImage = '';
+            
+            if (featuredImagePreview && featuredImagePreview.querySelector('img')) {
+                featuredImage = featuredImagePreview.querySelector('img').src;
+            } else {
+                // Use default image if none selected
+                featuredImage = 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+            }
+            
+            return {
+                id: AppState.currentArticle ? AppState.currentArticle.id : generateId(),
+                title,
+                excerpt,
+                content,
+                author: 'Admin User', // In a real app, this would be the logged in user
+                date: AppState.currentArticle ? AppState.currentArticle.date : new Date().toISOString().split('T')[0],
+                category,
+                tags,
+                featuredImage,
+                featured,
+                metaDescription,
+                published: AppState.currentArticle ? AppState.currentArticle.published : false,
+                views: AppState.currentArticle ? AppState.currentArticle.views || 0 : 0
+            };
+        }
+        
+        function saveArticle(article) {
+            // Check if article already exists
+            const existingIndex = AppState.articles.findIndex(a => a.id === article.id);
+            
+            if (existingIndex !== -1) {
+                // Update existing article
+                AppState.articles[existingIndex] = article;
+            } else {
+                // Add new article
+                AppState.articles.push(article);
+                
+                // Update category count
+                updateCategoryCount(article.category, 1);
+            }
+            
+            // Save to storage
+            saveToStorage('articles', AppState.articles);
+            
+            // Rebuild search index
+            rebuildSearchIndex();
+            
+            // Update UI
+            if (AppState.currentView === 'homepage') {
+                renderHomepage();
+            }
+        }
+        
+        function toggleArticlePublish(articleId) {
+            const article = AppState.articles.find(a => a.id === articleId);
+            
+            if (!article) return;
+            
+            article.published = !article.published;
+            
+            // Update category count
+            updateCategoryCount(article.category, article.published ? 1 : -1);
+            
+            // Save changes
+            saveToStorage('articles', AppState.articles);
+            
+            // Rebuild search index
+            rebuildSearchIndex();
+            
+            // Reload articles management
+            loadArticlesManagement();
+            
+            alert(`Article ${article.published ? 'published' : 'unpublished'} successfully!`);
+        }
+        
+        function deleteArticle(articleId) {
+            if (!confirm('Are you sure you want to delete this article?')) {
+                return;
+            }
+            
+            const article = AppState.articles.find(a => a.id === articleId);
+            
+            if (!article) return;
+            
+            // Update category count
+            if (article.published) {
+                updateCategoryCount(article.category, -1);
+            }
+            
+            // Remove article
+            AppState.articles = AppState.articles.filter(a => a.id !== articleId);
+            
+            // Save changes
+            saveToStorage('articles', AppState.articles);
+            
+            // Rebuild search index
+            rebuildSearchIndex();
+            
+            // Reload UI
+            if (AppState.currentView === 'homepage') {
+                renderHomepage();
+            }
+            
+            loadCMSDashboard();
+            loadArticlesManagement();
+            
+            alert('Article deleted successfully!');
+        }
+        
+        // ============================================
+        // MEDIA MANAGEMENT
+        // ============================================
+        
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            // Check if it's an image
+            if (!file.type.match('image.*')) {
+                alert('Please select an image file');
+                return;
+            }
+            
+            // Create a preview
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const imageUrl = event.target.result;
+                
+                // Display preview
+                const featuredImagePreview = document.getElementById('featured-image-preview');
+                if (featuredImagePreview) {
+                    featuredImagePreview.innerHTML = `
+                        <div class="uploaded-image">
+                            <img src="${imageUrl}" alt="Uploaded Image">
+                        </div>
+                    `;
+                }
+                
+                // Store in media library
+                AppState.media.push({
+                    url: imageUrl,
+                    name: file.name,
+                    uploaded: new Date().toISOString()
+                });
+                
+                saveToStorage('media', AppState.media);
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        function handleMediaUpload(e) {
+            const files = e.target.files;
+            if (!files || files.length === 0) return;
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                // Check if it's an image
+                if (!file.type.match('image.*')) {
+                    alert(`${file.name} is not an image file`);
+                    continue;
+                }
+                
+                // Create a preview
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const imageUrl = event.target.result;
+                    
+                    // Store in media library
+                    AppState.media.push({
+                        url: imageUrl,
+                        name: file.name,
+                        uploaded: new Date().toISOString()
+                    });
+                    
+                    saveToStorage('media', AppState.media);
+                    
+                    // Reload media library
+                    loadMediaLibrary();
+                };
+                
+                reader.readAsDataURL(file);
+            }
+            
+            alert('Images uploaded successfully!');
+        }
+        
+        function deleteMediaItem(index) {
+            if (!confirm('Are you sure you want to delete this image?')) {
+                return;
+            }
+            
+            AppState.media.splice(index, 1);
+            saveToStorage('media', AppState.media);
+            loadMediaLibrary();
+        }
+        
+        // ============================================
+        // CATEGORY MANAGEMENT
+        // ============================================
+        
+        function addNewCategory() {
+            const input = document.getElementById('new-category-input');
+            const name = input.value.trim();
+            
+            if (!name) {
+                alert('Please enter a category name');
+                return;
+            }
+            
+            // Check if category already exists
+            if (AppState.categories.some(cat => cat.name.toLowerCase() === name.toLowerCase())) {
+                alert('Category already exists');
+                return;
+            }
+            
+            // Add new category
+            const newCategory = {
+                id: generateId(),
+                name: name,
+                count: 0
+            };
+            
+            AppState.categories.push(newCategory);
+            saveToStorage('categories', AppState.categories);
+            
+            // Clear input
+            input.value = '';
+            
+            // Reload categories
+            loadCategoriesManagement();
+            
+            // Update category select in editor
+            loadCategorySelect();
+            
+            alert('Category added successfully!');
+        }
+        
+        function editCategory(categoryId) {
+            const category = AppState.categories.find(c => c.id === categoryId);
+            if (!category) return;
+            
+            const newName = prompt('Enter new category name:', category.name);
+            
+            if (newName && newName.trim()) {
+                const oldName = category.name;
+                category.name = newName.trim();
+                
+                // Update articles with this category
+                AppState.articles.forEach(article => {
+                    if (article.category === oldName) {
+                        article.category = newName.trim();
+                    }
+                });
+                
+                saveToStorage('articles', AppState.articles);
+                saveToStorage('categories', AppState.categories);
+                
+                // Rebuild search index
+                rebuildSearchIndex();
+                
+                // Reload UI
+                loadCategoriesManagement();
+                loadCategorySelect();
+                
+                alert('Category updated successfully!');
+            }
+        }
+        
+        function deleteCategory(categoryId) {
+            const category = AppState.categories.find(c => c.id === categoryId);
+            if (!category) return;
+            
+            if (category.count > 0) {
+                alert(`Cannot delete category "${category.name}" because it has ${category.count} article(s). Please reassign articles first.`);
+                return;
+            }
+            
+            if (!confirm(`Are you sure you want to delete category "${category.name}"?`)) {
+                return;
+            }
+            
+            // Remove category
+            AppState.categories = AppState.categories.filter(c => c.id !== categoryId);
+            saveToStorage('categories', AppState.categories);
+            
+            // Reload categories
+            loadCategoriesManagement();
+            loadCategorySelect();
+            
+            alert('Category deleted successfully!');
+        }
+        
+        function updateCategoryCount(categoryName, change) {
+            const category = AppState.categories.find(c => c.name === categoryName);
+            if (category) {
+                category.count = Math.max(0, (category.count || 0) + change);
+                saveToStorage('categories', AppState.categories);
+            }
+        }
+        
+        // ============================================
+        // SETTINGS MANAGEMENT
+        // ============================================
+        
+        function saveSettings() {
+            const siteTitle = document.getElementById('site-title').value;
+            const siteDescription = document.getElementById('site-description').value;
+            const enableAnimations = document.getElementById('enable-animations').checked;
+            
+            AppState.settings.siteTitle = siteTitle;
+            AppState.settings.siteDescription = siteDescription;
+            AppState.settings.enableAnimations = enableAnimations;
+            
+            saveToStorage('settings', AppState.settings);
+            
+            // Update site title in public website
+            const logo = document.querySelector('.logo span');
+            if (logo) {
+                logo.textContent = siteTitle;
+            }
+            
+            alert('Settings saved successfully!');
+        }
+        
+        function handleLogoUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            // Check if it's an image
+            if (!file.type.match('image.*')) {
+                alert('Please select an image file');
+                return;
+            }
+            
+            // Create a preview
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const imageUrl = event.target.result;
+                
+                // Save to localStorage
+                localStorage.setItem('siteLogo', imageUrl);
+                
+                // Update logo preview in settings
+                loadLogoPreview();
+                
+                alert('Logo uploaded successfully!');
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        // ============================================
+        // UTILITY FUNCTIONS
+        // ============================================
+        
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+        
+        function generateId() {
+            return '_' + Math.random().toString(36).substr(2, 9);
+        }
+        
+        function saveToStorage(key, data) {
+            try {
+                localStorage.setItem(key, JSON.stringify(data));
+            } catch (e) {
+                console.error('Error saving to localStorage:', e);
+            }
+        }
+        
+        // ============================================
+        // ANIMATIONS (if enabled)
+        // ============================================
+        
+        function initializeAnimations() {
+            if (!AppState.settings.enableAnimations) return;
+            
+            // Add animation classes to elements
+            const animateElements = document.querySelectorAll('.fade-in, .slide-up, .slide-down');
+            
+            animateElements.forEach((element, index) => {
+                // Add delay based on element position
+                element.style.animationDelay = `${index * 0.1}s`;
+            });
+        }
+        
+        // Initialize animations when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initializeAnimations);
+    </script>
+</body>
+</html>
