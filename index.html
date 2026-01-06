@@ -1310,6 +1310,85 @@
         </div>
     </div>
 
+    <!-- The Hub Article (Hidden Content) -->
+    <div id="the-hub-article-content" class="hidden">
+        <article>
+            <header class="article-header">
+                <h1>The Hub</h1>
+                <div class="article-detail-meta">
+                    <div class="article-author">
+                        <i class="fas fa-user"></i>
+                        <span>Science Research</span>
+                    </div>
+                    <div>
+                        <i class="far fa-calendar"></i>
+                        <span>Latest Findings</span>
+                    </div>
+                    <div>
+                        <i class="far fa-eye"></i>
+                        <span>Astronomy & AI</span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                    <span class="article-category">Science</span>
+                    <span class="article-category">AI</span>
+                    <span class="article-category">Space</span>
+                </div>
+            </header>
+            
+            <figure>
+                <div style="background: var(--color-surface-light); padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--color-border); margin: 2rem 0;">
+                    <img src="1000293726.jpg" alt="Diagram showing black hole structure with accretion disc, event horizon, singularity, and relativistic jets" class="article-detail-image" style="height: 400px;">
+                </div>
+                <figcaption style="color: var(--color-text-muted); font-size: 0.9rem; text-align: center; margin-top: 0.5rem;">
+                    Visualization of a black hole showing key components: accretion disc, event horizon, singularity, photon sphere, and relativistic jets.
+                </figcaption>
+            </figure>
+            
+            <div class="article-body">
+                <p>The black hole is a region of space where gravity becomes so intense that nothing, even light, is allowed to escape once inside. Black holes are formed when some types of stars collapse under the pull of their own gravity. AI is turning into new insights in space exploration by making it possible to enable autonomous navigation and data analysis for future missions.</p>
+                
+                <h2>Black Hole Basics</h2>
+                <p>At the center of a black hole is a single point, called a singularity, surrounded by an event horizon. The first photograph of a black hole, taken by the Event Horizon Telescope in 2019, shows a brilliant ring around a dark middle from the center of the galaxy M87. These 'loci celestia' affect spacetime, combating our knowledge of physics.</p>
+                
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 1.5rem; border-left: 4px solid var(--color-accent); margin: 2rem 0; border-radius: 0 var(--radius) var(--radius) 0;">
+                    <p>For comprehensive resources on astronomical phenomena and artificial intelligence applications, visit <a href="noend.website" rel="noopener noreferrer">our main science portal</a> where we compile the latest research and breakthrough discoveries.</p>
+                </div>
+                
+                <figure>
+                    <div style="background: var(--color-surface-light); padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--color-border); margin: 2rem 0;">
+                        <img src="1000293723.jpg" alt="Detailed scientific illustration of black hole components including event horizon and relativistic jets" class="article-detail-image" style="height: 400px;">
+                    </div>
+                    <figcaption style="color: var(--color-text-muted); font-size: 0.9rem; text-align: center; margin-top: 0.5rem;">
+                        Scientific illustration detailing black hole anatomy including the event horizon, accretion disk, and relativistic jets.
+                    </figcaption>
+                </figure>
+                
+                <h3>Inspiring Black Hole Image</h3>
+                <p>NASA's legendary picture shows the 'supermassive' black hole inside M87, its 'orange-hot' accretion disk spiraling around an 'inescapable void'. For more detailed <a href="https://my-site-90xslmbf-bad216882.wix-vibe.com/" rel="noopener noreferrer">space research articles</a> on this breakthrough, visit our research portal.</p>
+                
+                <h2>How Black Holes Are Made</h2>
+                <p>Stars over 20 times 'the size of our Sun' end their life cycles 'with a supernova explosion' and leave 'cores' that may 'collapse into a black hole' if more massive than 'three times the mass of our Sun'. 'Stellar-mass' black holes 'number from a few million to a billion' within our Milky Way, and 'supermassives' are 'common' within 'galaxy centers'. According to 'Hawking Radiation', they 'gradually' 'evaporate' 'in an extremely long' 'period'.</p>
+                
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 1.5rem; border-left: 4px solid var(--color-accent); margin: 2rem 0; border-radius: 0 var(--radius) var(--radius) 0;">
+                    <p>Recent studies published on <a href="blog.noend.website" rel="noopener noreferrer">scientific research platforms</a> continue to refine our understanding of black hole formation and lifecycle, with new data constantly emerging from observatories worldwide.</p>
+                </div>
+                
+                <h2>AI's Importance for the Future</h2>
+                <p>AI analyzes 'terabytes of data' from 'telescopes' and simulates black hole 'behavior' from 'chilled' images to 'videos'. In terms of space 'exploration', AI 'drives' 'autonomous' 'rovers' on Mars and 'navigates' 'with reduced' 'communications' 'delays'.</p>
+                
+                <h2>AI and Space Missions</h2>
+                <p>The organizations 'like NASA and the ESA actively' 'use AI' for 'real-time' 'decision' 'support' and 'digital twins' 'replicas' of 'spacecraft' 'design and testing' and 'exoplanet' 'detection'. 'Future' 'missions' 'to the Moon and beyond' 'require' 'radiation-hardened AI 'hardware'.</p>
+                
+                <p>Discover more about <a href="https://my-site-4nxva34z-ouse44347.wix-vibe.com/" rel="noopener noreferrer">AI technology applications</a> in astronomy and how artificial intelligence is revolutionizing our approach to space exploration across the scientific community.</p>
+            </div>
+            
+            <div style="margin-top: 3rem; text-align: center;">
+                <a href="#homepage" class="btn btn-secondary" onclick="showPublicWebsite(); return false;">Back to Home</a>
+            </div>
+        </article>
+    </div>
+
     <!-- Scripts -->
     <script>
         // ============================================
@@ -1388,7 +1467,7 @@
             if (savedArticles) {
                 AppState.articles = JSON.parse(savedArticles);
             } else {
-                // Load sample articles if none exist
+                // Load sample articles including The Hub article
                 loadSampleArticles();
             }
             
@@ -1419,6 +1498,21 @@
             AppState.articles = [
                 {
                     id: 1,
+                    title: "The Hub: Black Holes & AI in Space Research",
+                    excerpt: "Exploring the intersection of black hole science and artificial intelligence in modern space exploration and astronomical research.",
+                    content: document.getElementById('the-hub-article-content').innerHTML,
+                    author: "Science Research",
+                    date: "2024-03-20",
+                    category: "Science",
+                    tags: ["black holes", "AI", "space exploration", "astronomy", "research"],
+                    featuredImage: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    featured: true,
+                    published: true,
+                    metaDescription: "Exploring the science of black holes and how artificial intelligence is revolutionizing space exploration and astronomical research.",
+                    views: 1542
+                },
+                {
+                    id: 2,
                     title: "The Future of Web Development in 2024",
                     excerpt: "Exploring the latest trends and technologies shaping the future of web development, from AI integration to new frameworks.",
                     content: "<h2>The Evolution of Web Technologies</h2><p>Web development has undergone significant changes in recent years. The rise of JavaScript frameworks like React, Vue, and Angular has transformed how we build interactive user interfaces.</p><h2>AI Integration in Development</h2><p>Artificial Intelligence is becoming increasingly integrated into development workflows, from code completion tools to automated testing solutions.</p><h2>Performance Optimization</h2><p>With users expecting faster load times, performance optimization remains a critical focus for developers in 2024.</p>",
@@ -1433,7 +1527,7 @@
                     views: 1245
                 },
                 {
-                    id: 2,
+                    id: 3,
                     title: "Sustainable Living in Urban Environments",
                     excerpt: "How city dwellers can adopt sustainable practices to reduce their environmental impact while maintaining modern lifestyles.",
                     content: "<h2>The Urban Sustainability Challenge</h2><p>Urban environments present unique challenges for sustainable living, but also offer opportunities for innovation.</p><h2>Energy Efficient Solutions</h2><p>From solar panels to smart home systems, technology is enabling more energy-efficient urban living.</p><h2>Community Initiatives</h2><p>Local community gardens, recycling programs, and shared resources are making cities more sustainable.</p>",
@@ -1447,8 +1541,8 @@
                     metaDescription: "Practical guide to sustainable living practices for urban dwellers looking to reduce their environmental impact.",
                     views: 876
                 },
-                
-    id: 3,
+                {
+                    id: 4,
                     title: "The Psychology of Color in Marketing",
                     excerpt: "Understanding how color influences consumer behavior and decision-making in digital marketing campaigns.",
                     content: "<h2>Color Theory Basics</h2><p>Different colors evoke different emotional responses, which marketers can leverage to influence consumer behavior.</p><h2>Industry-Specific Color Choices</h2><p>Certain industries have established color conventions that consumers have come to expect and trust.</p><h2>Cultural Considerations</h2><p>Color meanings vary across cultures, making international marketing campaigns particularly challenging.</p>",
@@ -1469,10 +1563,10 @@
         
         function loadSampleCategories() {
             AppState.categories = [
-                { id: 1, name: "Technology", count: 1 },
-                { id: 2, name: "Lifestyle", count: 1 },
-                { id: 3, name: "Marketing", count: 1 },
-                { id: 4, name: "Science", count: 0 },
+                { id: 1, name: "Science", count: 1 },
+                { id: 2, name: "Technology", count: 1 },
+                { id: 3, name: "Lifestyle", count: 1 },
+                { id: 4, name: "Marketing", count: 1 },
                 { id: 5, name: "Business", count: 0 }
             ];
             
@@ -1757,7 +1851,11 @@
                 'market': ['advertise', 'promote', 'sell', 'business', 'commerce'],
                 'psychology': ['behavior', 'mind', 'mental', 'cognitive', 'emotional'],
                 'color': ['hue', 'tint', 'shade', 'palette', 'pigment'],
-                'urban': ['city', 'metropolitan', 'downtown', 'civic', 'municipal']
+                'urban': ['city', 'metropolitan', 'downtown', 'civic', 'municipal'],
+                'black': ['hole', 'space', 'gravity', 'cosmic', 'astronomy'],
+                'hole': ['black', 'space', 'void', 'cosmic', 'gravity'],
+                'ai': ['artificial', 'intelligence', 'machine', 'learning', 'algorithm'],
+                'space': ['exploration', 'astronomy', 'cosmic', 'universe', 'galaxy']
             };
             
             // Find matching LSI terms
@@ -2216,37 +2314,7 @@
             const container = document.querySelector('.article-detail');
             if (!container) return;
             
-            container.innerHTML = `
-                <article>
-                    <div class="article-header">
-                        <h1>${article.title}</h1>
-                        <div class="article-detail-meta">
-                            <div class="article-author">
-                                <i class="fas fa-user"></i>
-                                <span>${article.author}</span>
-                            </div>
-                            <div>
-                                <i class="far fa-calendar"></i>
-                                <span>${formatDate(article.date)}</span>
-                            </div>
-                            <div>
-                                <i class="far fa-eye"></i>
-                                <span>${article.views || 0} views</span>
-                            </div>
-                        </div>
-                        <div class="article-tags">
-                            ${article.tags.map(tag => `<span class="article-category">${tag}</span>`).join(' ')}
-                        </div>
-                        <img src="${article.featuredImage}" alt="${article.title}" class="article-detail-image">
-                    </div>
-                    <div class="article-body">
-                        ${article.content}
-                    </div>
-                </article>
-                <div style="margin-top: 3rem; text-align: center;">
-                    <a href="#homepage" class="btn btn-secondary">Back to Home</a>
-                </div>
-            `;
+            container.innerHTML = article.content;
             
             // Add back button functionality
             const backButton = container.querySelector('a[href="#homepage"]');
@@ -3064,9 +3132,5 @@
         // Initialize animations when DOM is loaded
         document.addEventListener('DOMContentLoaded', initializeAnimations);
     </script>
-    <p style="font-size:0.9rem; color:var(--text-secondary); margin-top:3rem;">
-      © 2024 NoEnd Science Hub – Advancing knowledge in science, AI, and space exploration.
-    </p>
-  </footer>
 </body>
 </html>
